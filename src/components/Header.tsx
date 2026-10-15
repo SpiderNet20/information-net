@@ -13,7 +13,7 @@ import {
   Gauge,
   Sparkles,
 } from 'lucide-react';
-import { PageType } from './PagesModal';
+import { StandalonePageType } from '../types';
 
 interface HeaderProps {
   darkMode: boolean;
@@ -23,9 +23,7 @@ interface HeaderProps {
   onOpenSpeedTest: () => void;
   onOpenRedirectTool: () => void;
   onOpenSeoViewer: () => void;
-  onOpenSitemap?: () => void;
-  onOpenPage: (page: PageType) => void;
-  onOpenContact: () => void;
+  onOpenStandalonePage: (page: StandalonePageType) => void;
   activeCategory: string;
   onSelectCategory: (cat: string) => void;
 }
@@ -38,9 +36,7 @@ export const Header: React.FC<HeaderProps> = ({
   onOpenSpeedTest,
   onOpenRedirectTool,
   onOpenSeoViewer,
-  onOpenSitemap,
-  onOpenPage,
-  onOpenContact,
+  onOpenStandalonePage,
   activeCategory,
   onSelectCategory,
 }) => {
@@ -59,28 +55,28 @@ export const Header: React.FC<HeaderProps> = ({
             </button>
             <span className="opacity-40">•</span>
             <button
-              onClick={onOpenContact}
+              onClick={() => onOpenStandalonePage('contact')}
               className="hover:text-blue-100 transition-colors"
             >
               اتصل بنا
             </button>
             <span className="opacity-40">•</span>
             <button
-              onClick={() => onOpenPage('about')}
+              onClick={() => onOpenStandalonePage('about')}
               className="hover:text-blue-100 transition-colors"
             >
               من نحن
             </button>
             <span className="opacity-40">•</span>
             <button
-              onClick={() => onOpenPage('privacy')}
+              onClick={() => onOpenStandalonePage('privacy')}
               className="hover:text-blue-100 transition-colors"
             >
               سياسة الخصوصية
             </button>
             <span className="opacity-40">•</span>
             <button
-              onClick={() => onOpenPage('terms')}
+              onClick={() => onOpenStandalonePage('terms')}
               className="hover:text-blue-100 transition-colors"
             >
               اتفاقية المستخدم
@@ -95,16 +91,14 @@ export const Header: React.FC<HeaderProps> = ({
             </button>
             <span className="opacity-40">•</span>
             {/* Sitemap XML */}
-            {onOpenSitemap && (
-              <button
-                onClick={onOpenSitemap}
-                className="flex items-center gap-1 text-blue-100 hover:text-white font-bold transition-colors"
-                title="خريطة الموقع XML"
-              >
-                <Globe className="w-3.5 h-3.5" />
-                <span>خريطة الموقع (Sitemap)</span>
-              </button>
-            )}
+            <button
+              onClick={() => onOpenStandalonePage('sitemap')}
+              className="flex items-center gap-1 text-blue-100 hover:text-white font-bold transition-colors"
+              title="خريطة الموقع XML"
+            >
+              <Globe className="w-3.5 h-3.5" />
+              <span>خريطة الموقع (Sitemap)</span>
+            </button>
           </nav>
 
           {/* Social Icons (HeaderTOP in SeoPlus) */}

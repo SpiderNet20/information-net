@@ -12,21 +12,17 @@ import {
   Gauge,
   Sparkles,
 } from 'lucide-react';
-import { PageType } from './PagesModal';
+import { StandalonePageType } from '../types';
 
 interface FooterProps {
-  onOpenPage: (page: PageType) => void;
+  onOpenStandalonePage: (page: StandalonePageType) => void;
   onOpenSpeedTest: () => void;
-  onOpenContact: () => void;
-  onOpenSitemap?: () => void;
   onSelectCategory: (cat: string) => void;
 }
 
 export const Footer: React.FC<FooterProps> = ({
-  onOpenPage,
+  onOpenStandalonePage,
   onOpenSpeedTest,
-  onOpenContact,
-  onOpenSitemap,
   onSelectCategory,
 }) => {
   return (
@@ -59,7 +55,7 @@ export const Footer: React.FC<FooterProps> = ({
             <ul className="space-y-2 text-xs text-gray-600 dark:text-gray-300">
               <li>
                 <button
-                  onClick={() => onOpenPage('about')}
+                  onClick={() => onOpenStandalonePage('about')}
                   className="hover:text-[#035dcd] dark:hover:text-blue-400 flex items-center gap-1.5 transition-colors cursor-pointer"
                 >
                   <Info className="w-3.5 h-3.5 text-[#035dcd]" />
@@ -68,7 +64,7 @@ export const Footer: React.FC<FooterProps> = ({
               </li>
               <li>
                 <button
-                  onClick={() => onOpenPage('privacy')}
+                  onClick={() => onOpenStandalonePage('privacy')}
                   className="hover:text-[#035dcd] dark:hover:text-blue-400 flex items-center gap-1.5 transition-colors cursor-pointer"
                 >
                   <Shield className="w-3.5 h-3.5 text-[#035dcd]" />
@@ -77,7 +73,7 @@ export const Footer: React.FC<FooterProps> = ({
               </li>
               <li>
                 <button
-                  onClick={() => onOpenPage('terms')}
+                  onClick={() => onOpenStandalonePage('terms')}
                   className="hover:text-[#035dcd] dark:hover:text-blue-400 flex items-center gap-1.5 transition-colors cursor-pointer"
                 >
                   <FileText className="w-3.5 h-3.5 text-[#035dcd]" />
@@ -86,24 +82,22 @@ export const Footer: React.FC<FooterProps> = ({
               </li>
               <li>
                 <button
-                  onClick={onOpenContact}
+                  onClick={() => onOpenStandalonePage('contact')}
                   className="hover:text-[#035dcd] dark:hover:text-blue-400 flex items-center gap-1.5 transition-colors cursor-pointer"
                 >
                   <Mail className="w-3.5 h-3.5 text-[#035dcd]" />
                   <span>اتصل بنا</span>
                 </button>
               </li>
-              {onOpenSitemap && (
-                <li>
-                  <button
-                    onClick={onOpenSitemap}
-                    className="hover:text-[#035dcd] dark:hover:text-blue-400 flex items-center gap-1.5 transition-colors cursor-pointer"
-                  >
-                    <ExternalLink className="w-3.5 h-3.5 text-[#035dcd]" />
-                    <span>خريطة الموقع</span>
-                  </button>
-                </li>
-              )}
+              <li>
+                <button
+                  onClick={() => onOpenStandalonePage('sitemap')}
+                  className="hover:text-[#035dcd] dark:hover:text-blue-400 flex items-center gap-1.5 transition-colors cursor-pointer"
+                >
+                  <ExternalLink className="w-3.5 h-3.5 text-[#035dcd]" />
+                  <span>خريطة الموقع</span>
+                </button>
+              </li>
             </ul>
           </div>
 

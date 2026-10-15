@@ -15,18 +15,18 @@ import {
   Youtube,
   Twitter,
   Flame,
+  Globe,
 } from 'lucide-react';
-import { PageType } from './PagesModal';
+import { StandalonePageType } from '../types';
 
 interface MobileDrawerProps {
   isOpen: boolean;
   onClose: () => void;
   activeCategory: string;
   onSelectCategory: (cat: string) => void;
-  onOpenPage: (page: PageType) => void;
+  onOpenStandalonePage: (page: StandalonePageType) => void;
   onOpenSpeedTest: () => void;
   onOpenRedirectTool: () => void;
-  onOpenContact: () => void;
 }
 
 export const MobileDrawer: React.FC<MobileDrawerProps> = ({
@@ -34,10 +34,9 @@ export const MobileDrawer: React.FC<MobileDrawerProps> = ({
   onClose,
   activeCategory,
   onSelectCategory,
-  onOpenPage,
+  onOpenStandalonePage,
   onOpenSpeedTest,
   onOpenRedirectTool,
-  onOpenContact,
 }) => {
   if (!isOpen) return null;
 
@@ -223,7 +222,7 @@ export const MobileDrawer: React.FC<MobileDrawerProps> = ({
 
           <button
             onClick={() => {
-              onOpenContact();
+              onOpenStandalonePage('contact');
               onClose();
             }}
             className="w-full flex items-center gap-3 px-3.5 py-2 rounded-xl text-xs font-medium text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-[#1e2348]"
@@ -234,7 +233,7 @@ export const MobileDrawer: React.FC<MobileDrawerProps> = ({
 
           <button
             onClick={() => {
-              onOpenPage('about');
+              onOpenStandalonePage('about');
               onClose();
             }}
             className="w-full flex items-center gap-3 px-3.5 py-2 rounded-xl text-xs font-medium text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-[#1e2348]"
@@ -245,13 +244,35 @@ export const MobileDrawer: React.FC<MobileDrawerProps> = ({
 
           <button
             onClick={() => {
-              onOpenPage('privacy');
+              onOpenStandalonePage('privacy');
               onClose();
             }}
             className="w-full flex items-center gap-3 px-3.5 py-2 rounded-xl text-xs font-medium text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-[#1e2348]"
           >
             <Shield className="w-4 h-4 text-gray-400" />
             <span>سياسة الخصوصية</span>
+          </button>
+
+          <button
+            onClick={() => {
+              onOpenStandalonePage('terms');
+              onClose();
+            }}
+            className="w-full flex items-center gap-3 px-3.5 py-2 rounded-xl text-xs font-medium text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-[#1e2348]"
+          >
+            <FileText className="w-4 h-4 text-gray-400" />
+            <span>اتفاقية المستخدم</span>
+          </button>
+
+          <button
+            onClick={() => {
+              onOpenStandalonePage('sitemap');
+              onClose();
+            }}
+            className="w-full flex items-center gap-3 px-3.5 py-2 rounded-xl text-xs font-medium text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-[#1e2348]"
+          >
+            <Globe className="w-4 h-4 text-gray-400" />
+            <span>خريطة الموقع</span>
           </button>
         </div>
 

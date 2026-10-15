@@ -53,3 +53,6 @@ export interface CategoryInfo {
   count: number;
   colorClass: string;
 }
+
+export type StandalonePageType = 'about' | 'contact' | 'privacy' | 'terms' | 'sitemap';
+

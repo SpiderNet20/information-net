@@ -46,6 +46,8 @@ import { Footer } from './components/Footer';
 import { SeoSchemaViewerModal } from './components/SeoSchemaViewerModal';
 import { SitemapModal } from './components/SitemapModal';
 import { HomeCategorySection } from './components/HomeCategorySection';
+import { StandalonePageView } from './components/StandalonePageView';
+import { StandalonePageType } from './types';
 import { applySeoMetadata } from './utils/seo';
 
 export default function App() {
@@ -71,6 +73,7 @@ export default function App() {
   const [isSitemapOpen, setIsSitemapOpen] = useState(false);
   const [lightboxImage, setLightboxImage] = useState<{ url: string; title?: string } | null>(null);
   const [activePage, setActivePage] = useState<PageType | null>(null);
+  const [standalonePage, setStandalonePage] = useState<StandalonePageType | null>(null);
 
   // Pagination / Load More
   const [visibleCount, setVisibleCount] = useState(6);
@@ -121,7 +124,15 @@ export default function App() {
     const clean = target.replace(/^\/+|\/+$/g, '').trim();
 
     if (!clean) {
-      return { post: null, category: 'all', cleanPath: '/' };
+      return { post: null, category: 'all', standalone: null, cleanPath: '/' };
+    }
+
+    const standalonePages: StandalonePageType[] = ['about', 'contact', 'privacy', 'terms', 'sitemap'];
+    const matchedStandalone = standalonePages.find(
+      (p) => p.toLowerCase() === clean.toLowerCase()
+    );
+    if (matchedStandalone) {
+      return { post: null, category: 'all', standalone: matchedStandalone, cleanPath: `/${matchedStandalone}` };
     }
 
     const officialCategories = ['AI', 'Games', 'Software', 'Business', 'Education'];
@@ -131,7 +142,7 @@ export default function App() {
       (c) => c.toLowerCase() === clean.toLowerCase()
     );
     if (matchedCat) {
-      return { post: null, category: matchedCat, cleanPath: `/${matchedCat}/` };
+      return { post: null, category: matchedCat, standalone: null, cleanPath: `/${matchedCat}/` };
     }
 
     // 2. Check if path is {category}/{slug} or just {slug}
@@ -147,6 +158,7 @@ export default function App() {
       return {
         post: foundPost,
         category: foundPost.categorySlug,
+        standalone: null,
         cleanPath: `/${foundPost.categorySlug}/${foundPost.slug}`,
       };
     }
@@ -157,19 +169,20 @@ export default function App() {
         (c) => c.toLowerCase() === categoryPart.toLowerCase()
       );
       if (catCheck) {
-        return { post: null, category: catCheck, cleanPath: `/${catCheck}/` };
+        return { post: null, category: catCheck, standalone: null, cleanPath: `/${catCheck}/` };
       }
     }
 
-    return { post: null, category: 'all', cleanPath: '/' };
+    return { post: null, category: 'all', standalone: null, cleanPath: '/' };
   };
 
   // Initial Deep-Link URL listener & Back/Forward button popstate support
   useEffect(() => {
     const handlePopState = () => {
-      const { post, category, cleanPath } = parseUrlToState();
+      const { post, category, standalone, cleanPath } = parseUrlToState();
       setSelectedPost(post);
       setActiveCategory(category);
+      setStandalonePage(standalone);
 
       // Clean legacy hash or non-standard slashes
       if (window.location.hash || window.location.pathname !== cleanPath) {
@@ -216,6 +229,7 @@ export default function App() {
     const norm = normalizeCategorySlug(cat);
     setActiveCategory(norm);
     setSelectedPost(null);
+    setStandalonePage(null);
     setVisibleCount(6);
 
     const targetPath = norm === 'all' ? '/' : `/${norm}/`;
@@ -233,6 +247,7 @@ export default function App() {
   // Post selection handler with clean path URL (/{categorySlug}/{slug})
   const handleSelectPost = (post: Post) => {
     setSelectedPost(post);
+    setStandalonePage(null);
     setActiveCategory(post.categorySlug);
 
     const targetPath = `/${post.categorySlug}/${post.slug}`;
@@ -246,7 +261,19 @@ export default function App() {
   // Back to home / category handler
   const handleBackToHome = () => {
     setSelectedPost(null);
+    setStandalonePage(null);
     const targetPath = activeCategory !== 'all' ? `/${activeCategory}/` : '/';
+    if (window.location.pathname !== targetPath || window.location.hash) {
+      window.history.pushState(null, '', targetPath);
+    }
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  // Open Standalone Page handler
+  const handleOpenStandalonePage = (pageType: StandalonePageType) => {
+    setStandalonePage(pageType);
+    setSelectedPost(null);
+    const targetPath = `/${pageType}`;
     if (window.location.pathname !== targetPath || window.location.hash) {
       window.history.pushState(null, '', targetPath);
     }
@@ -265,9 +292,7 @@ export default function App() {
         onOpenSpeedTest={() => setIsSpeedTestOpen(true)}
         onOpenRedirectTool={() => setIsRedirectToolOpen(true)}
         onOpenSeoViewer={() => setIsSeoViewerOpen(true)}
-        onOpenSitemap={() => setIsSitemapOpen(true)}
-        onOpenPage={(page) => setActivePage(page)}
-        onOpenContact={() => setIsContactOpen(true)}
+        onOpenStandalonePage={handleOpenStandalonePage}
         activeCategory={activeCategory}
         onSelectCategory={handleSelectCategory}
       />
@@ -275,8 +300,18 @@ export default function App() {
       {/* 2. Container Site Wrapper */}
       <main className="flex-1 max-w-7xl w-full mx-auto px-3 sm:px-6 py-4">
         
-        {/* Full Article Page View when an article is selected */}
-        {selectedPost ? (
+        {/* Standalone Full Page View (About, Contact, Privacy, Terms, Sitemap) */}
+        {standalonePage ? (
+          <StandalonePageView
+            pageType={standalonePage}
+            posts={INITIAL_POSTS}
+            categories={INITIAL_CATEGORIES}
+            onSelectPost={handleSelectPost}
+            onSelectCategory={handleSelectCategory}
+            onGoHome={handleBackToHome}
+            onNavigatePage={handleOpenStandalonePage}
+          />
+        ) : selectedPost ? (
           <PostPageView
             post={selectedPost}
             allPosts={INITIAL_POSTS}
@@ -698,10 +733,8 @@ export default function App() {
 
       {/* 3. Footer */}
       <Footer
-        onOpenPage={(p) => setActivePage(p)}
+        onOpenStandalonePage={handleOpenStandalonePage}
         onOpenSpeedTest={() => setIsSpeedTestOpen(true)}
-        onOpenContact={() => setIsContactOpen(true)}
-        onOpenSitemap={() => setIsSitemapOpen(true)}
         onSelectCategory={handleSelectCategory}
       />
 
@@ -720,10 +753,9 @@ export default function App() {
         onClose={() => setIsMobileMenuOpen(false)}
         activeCategory={activeCategory}
         onSelectCategory={handleSelectCategory}
-        onOpenPage={(p) => setActivePage(p)}
+        onOpenStandalonePage={handleOpenStandalonePage}
         onOpenSpeedTest={() => setIsSpeedTestOpen(true)}
         onOpenRedirectTool={() => setIsRedirectToolOpen(true)}
-        onOpenContact={() => setIsContactOpen(true)}
       />
 
       {/* 6. Modals */}
