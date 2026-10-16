@@ -1,4 +1,4 @@
-import { Post, CategoryInfo } from "../types";
+import { Post, CategoryInfo } from "../types.ts";
 
 export const INITIAL_CATEGORIES: CategoryInfo[] = [
   {
