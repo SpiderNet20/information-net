@@ -260,11 +260,7 @@ export const Footer: React.FC<FooterProps> = ({
               العنكبوت للمعلومات (information-net)
             </span>
           </div>
-          <div className="flex items-center gap-3 text-gray-400">
-            <span>مدعوم بقالب سيو بلس v8.0</span>
-            <span>•</span>
-            <span>تصميم متجاوب وسريع</span>
-          </div>
+
         </div>
       </div>
     </footer>

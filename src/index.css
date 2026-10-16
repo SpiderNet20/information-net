@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@variant dark (&:where(.dark, .dark *));
 
 :root {
   --minColor: #035dcd;
@@ -37,6 +38,25 @@ body {
   background-color: var(--BodyBG);
   color: var(--txtColor);
   transition: background-color 0.25s ease, color 0.25s ease;
+  overflow-x: hidden;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html {
+  overflow-x: hidden;
+}
+
+/* Utilities */
+.no-scrollbar {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.safe-bottom {
+  padding-bottom: env(safe-area-inset-bottom, 0px);
 }
 
 /* SeoPlus Headline underline style */
@@ -122,6 +142,10 @@ body {
   border-right: 4px solid var(--minColor);
   padding-right: 0.75rem;
 }
+@media (max-width: 768px) {
+  .article-raw-html h2 { font-size: 1.25rem; }
+  .article-raw-html h3 { font-size: 1.1rem; }
+}
 .article-raw-html h3 {
   font-size: 1.25rem;
 }
@@ -155,6 +179,8 @@ body {
   width: 100%;
   border-collapse: collapse;
   margin: 1.25rem 0;
+  display: block;
+  overflow-x: auto;
 }
 .article-raw-html table th, .article-raw-html table td {
   border: 1px solid var(--Borderes);

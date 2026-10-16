@@ -37,37 +37,31 @@
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://www.information-net.com/p/blog-page.html</loc>
+    <loc>https://www.information-net.com/about</loc>
     <lastmod>2026-10-15T09:04:11.367Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://www.information-net.com/p/review.html</loc>
+    <loc>https://www.information-net.com/contact</loc>
     <lastmod>2026-10-15T09:04:11.367Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://www.information-net.com/p/privacy-policy.html</loc>
+    <loc>https://www.information-net.com/privacy</loc>
     <lastmod>2026-10-15T09:04:11.367Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://www.information-net.com/p/user-agreement.html</loc>
+    <loc>https://www.information-net.com/terms</loc>
     <lastmod>2026-10-15T09:04:11.367Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://www.information-net.com/p/internet-speed-test.html</loc>
-    <lastmod>2026-10-15T09:04:11.367Z</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://www.information-net.com/p/redirect.html</loc>
+    <loc>https://www.information-net.com/sitemap</loc>
     <lastmod>2026-10-15T09:04:11.367Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>

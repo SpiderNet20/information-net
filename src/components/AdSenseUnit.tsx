@@ -53,13 +53,7 @@ export const AdSenseUnit: React.FC<AdSenseUnitProps> = ({
         className={`ads-container-top w-full overflow-hidden my-4 py-2 text-center ${className}`}
         style={{ textAlign: 'center', margin: '15px 0' }}
       >
-        <div className="flex items-center justify-center gap-2 mb-1.5">
-          <span className="h-[1px] w-12 bg-gray-200 dark:bg-[#2f366b]" />
-          <span className="text-[10px] uppercase tracking-wider text-gray-400 dark:text-gray-500 font-medium">
-            إعلان ممول
-          </span>
-          <span className="h-[1px] w-12 bg-gray-200 dark:bg-[#2f366b]" />
-        </div>
+
 
         {/* 1. إعلان أول المقال (تحت العنوان مباشرة أو أسفل صورة الغلاف) */}
         <div className="min-h-[100px] w-full flex items-center justify-center rounded-xl bg-gray-50/60 dark:bg-[#1a1e3b]/40 border border-dashed border-gray-200 dark:border-[#2f366b]/60 transition-colors">
@@ -83,13 +77,7 @@ export const AdSenseUnit: React.FC<AdSenseUnitProps> = ({
         className={`ads-container-middle w-full overflow-hidden my-6 py-2 text-center ${className}`}
         style={{ textAlign: 'center', margin: '25px 0' }}
       >
-        <div className="flex items-center justify-center gap-2 mb-1.5">
-          <span className="h-[1px] w-12 bg-gray-200 dark:bg-[#2f366b]" />
-          <span className="text-[10px] uppercase tracking-wider text-gray-400 dark:text-gray-500 font-medium">
-            إعلان داخل المقال
-          </span>
-          <span className="h-[1px] w-12 bg-gray-200 dark:bg-[#2f366b]" />
-        </div>
+
 
         {/* 2. إعلان داخل المقالة (يُوضع بعد الفقرة الثانية أو الثالثة بين العناوين) */}
         <div className="min-h-[120px] w-full flex items-center justify-center rounded-xl bg-gray-50/60 dark:bg-[#1a1e3b]/40 border border-dashed border-gray-200 dark:border-[#2f366b]/60 transition-colors">
@@ -113,13 +101,7 @@ export const AdSenseUnit: React.FC<AdSenseUnitProps> = ({
       className={`ads-container-bottom w-full overflow-hidden my-8 py-2 text-center ${className}`}
       style={{ textAlign: 'center', margin: '30px 0' }}
     >
-      <div className="flex items-center justify-center gap-2 mb-1.5">
-        <span className="h-[1px] w-12 bg-gray-200 dark:bg-[#2f366b]" />
-        <span className="text-[10px] uppercase tracking-wider text-gray-400 dark:text-gray-500 font-medium">
-          إعلان ممول
-        </span>
-        <span className="h-[1px] w-12 bg-gray-200 dark:bg-[#2f366b]" />
-      </div>
+
 
       <div className="min-h-[120px] w-full flex items-center justify-center rounded-xl bg-gray-50/60 dark:bg-[#1a1e3b]/40 border border-dashed border-gray-200 dark:border-[#2f366b]/60 transition-colors">
         <ins

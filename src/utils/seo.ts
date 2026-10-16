@@ -141,6 +141,7 @@ export function getFaqSchema(post: Post) {
 export function applySeoMetadata(
   post: Post | null,
   activeCategory: string = 'all',
+  standalonePage: string | null = null,
   config: SeoConfig = DEFAULT_SEO_CONFIG
 ) {
   if (typeof document === 'undefined') return;
@@ -208,6 +209,46 @@ export function applySeoMetadata(
     updateMeta('name', 'twitter:image', config.logoUrl);
 
     updateCanonical(catUrl);
+
+    const websiteLd = getWebSiteSchema(config);
+    injectJsonLd('schema-website', websiteLd);
+    removeJsonLd('schema-article');
+    removeJsonLd('schema-breadcrumbs');
+    removeJsonLd('schema-faq');
+  } else if (standalonePage) {
+    const pageTitles: Record<string, string> = {
+      about: 'من نحن - نبذة عن الموقع ورسالتنا',
+      contact: 'اتصل بنا - قنوات التواصل ونموذج المراسلة',
+      privacy: 'سياسة الخصوصية - معايير الأمان وحماية البيانات',
+      terms: 'اتفاقية المستخدم - شروط الاستخدام وحقوق الملكية',
+      sitemap: 'خريطة الموقع - فهرس المقالات والأقسام',
+    };
+    const pageDescriptions: Record<string, string> = {
+      about: 'تعرف على موقع العنكبوت للمعلومات، رسالتنا التقنية، وفريق العمل الذي يسعى لتقديم أفضل المحتوى العربي.',
+      contact: 'تواصل معنا عبر قنواتنا الرسمية أو نموذج الاتصال المباشر للاستفسارات والاقتراحات.',
+      privacy: 'نحن نلتزم بأقصى معايير الخصوصية وحماية بيانات الزوار وفقاً للمعايير الدولية وجوجل أدسنس.',
+      terms: 'شروط استخدام موقع العنكبوت للمعلومات وحدود حقوق الملكية الفكرية للمحتوى المنشور.',
+      sitemap: 'تصفح كافة أقسام ومقالات موقع العنكبوت للمعلومات من خلال الفهرس الديناميكي الشامل.',
+    };
+
+    const title = pageTitles[standalonePage] || 'صفحة مستقلة';
+    const desc = pageDescriptions[standalonePage] || config.siteDescription;
+    const pageUrl = `${config.siteUrl}/${standalonePage}`;
+
+    document.title = `${title} | ${config.siteName}`;
+    updateMeta('name', 'description', desc);
+
+    updateMeta('property', 'og:title', `${title} | ${config.siteName}`);
+    updateMeta('property', 'og:description', desc);
+    updateMeta('property', 'og:image', config.logoUrl);
+    updateMeta('property', 'og:type', 'website');
+    updateMeta('property', 'og:url', pageUrl);
+
+    updateMeta('name', 'twitter:title', `${title} | ${config.siteName}`);
+    updateMeta('name', 'twitter:description', desc);
+    updateMeta('name', 'twitter:image', config.logoUrl);
+
+    updateCanonical(pageUrl);
 
     const websiteLd = getWebSiteSchema(config);
     injectJsonLd('schema-website', websiteLd);

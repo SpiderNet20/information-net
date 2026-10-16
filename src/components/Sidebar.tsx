@@ -95,12 +95,13 @@ export const Sidebar: React.FC<SidebarProps> = ({
           >
             <div className="relative h-44 rounded-xl overflow-hidden mb-3 bg-gray-200">
               <img
-                src={featuredPost.thumbnail}
-                alt={featuredPost.title}
+                src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEim_v26sTX-46q3vzw-k-qC8YagKzRLoYdGCDQKUeOUbdoPdrLGmeIGqNuQruN1RV11zWgp3pDIWlAe8YotQ7qLwrKzhyphenhyphenYiNSwPiNiC1QsAow_-yhfvePNdpWW-L0vQLgoXi7ZTeAoxlAGX2yExp2BmIqc1Mpq3gh6Y5pg-W3Oc7Hwo4q2fAI9kxvlHs1w/s1254/Earning-money-online.webp"
+                alt="العنكبوت للمعلومات - الربح من الإنترنت والشروحات التقنية والذكاء الاصطناعي وببجي موبايل"
+                title="العنكبوت للمعلومات information-net"
                 className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
               />
-              <span className={`absolute top-2 right-2 text-[10px] font-bold text-white px-2 py-0.5 rounded cat-badge-${featuredPost.categoryIndex}`}>
-                {featuredPost.category}
+              <span className="absolute top-2 right-2 text-[10px] font-bold text-white px-2.5 py-0.5 rounded bg-[#035dcd]">
+                الربح والشروحات التقنية
               </span>
             </div>
 
@@ -234,7 +235,6 @@ export const Sidebar: React.FC<SidebarProps> = ({
                     ? 'bg-[#035dcd] text-white font-bold shadow-sm'
                     : 'text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-[#1e2348]'
                 }`}
-                title={`https://www.information-net.com/${cat.slug}/`}
               >
                 <div className="flex items-center gap-2">
                   <span className="font-medium">{cat.name}</span>

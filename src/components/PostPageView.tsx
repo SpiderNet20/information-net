@@ -68,7 +68,7 @@ export const PostPageView: React.FC<PostPageViewProps> = ({
   const [fontSize, setFontSize] = useState(17);
   const [lineHeight, setLineHeight] = useState(2);
   const [showSettings, setShowSettings] = useState(false);
-  const [isTocOpen, setIsTocOpen] = useState(true);
+  const [isTocOpen, setIsTocOpen] = useState(false);
   const [activeCommentTab, setActiveCommentTab] = useState<'blogger' | 'facebook' | 'disqus'>('blogger');
   const [copiedLink, setCopiedLink] = useState(false);
   const [articlePage, setArticlePage] = useState(1);
@@ -350,55 +350,15 @@ export const PostPageView: React.FC<PostPageViewProps> = ({
       {/* Scroll-linked progress bar at the top of the screen */}
       <ReadingProgressBar targetId="article-body" postTitle={post.title} />
       
-      {/* 1. Breadcrumbs & Return Bar */}
-      <div className="mb-6 flex flex-wrap items-center justify-between gap-3 text-xs bg-white dark:bg-[#252a54] p-3.5 rounded-xl border border-gray-100 dark:border-[#2f366b] shadow-sm">
-        <div className="flex items-center gap-2 text-gray-500 dark:text-gray-400">
-          <a
-            href="/"
-            onClick={(e) => {
-              e.preventDefault();
-              onBackToHome();
-            }}
-            className="flex items-center gap-1 hover:text-[#035dcd] dark:hover:text-blue-400 transition-colors font-semibold cursor-pointer"
-          >
-            <Home className="w-3.5 h-3.5" />
-            <span>الرئيسية</span>
-          </a>
-          <span>/</span>
-          <a
-            href={`/${post.categorySlug}/`}
-            onClick={(e) => {
-              e.preventDefault();
-              onSelectCategory(post.categorySlug);
-            }}
-            className="hover:text-[#035dcd] dark:hover:text-blue-400 transition-colors font-semibold cursor-pointer"
-          >
-            {post.category}
-          </a>
-          <span>/</span>
-          <span className="text-gray-800 dark:text-gray-200 truncate max-w-xs sm:max-w-md font-bold">
-            {post.title}
-          </span>
-        </div>
-
-        <button
-          onClick={onBackToHome}
-          className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-gray-100 dark:bg-[#1e2348] text-gray-700 dark:text-gray-200 text-xs font-bold hover:bg-[#035dcd] hover:text-white transition-all cursor-pointer"
-        >
-          <ArrowRight className="w-4 h-4" />
-          <span>العودة للرئيسية</span>
-        </button>
-      </div>
-
-      {/* 2. Main Two-Column Layout (Article + Sidebar) */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
+      {/* 1. Content */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8 items-start w-full max-w-full">
         
         {/* Left/Main Column: Complete Article */}
-        <div className="lg:col-span-2 space-y-6">
+        <div className="lg:col-span-2 w-full space-y-4 sm:space-y-6 overflow-visible">
           
-          <article className="bg-white dark:bg-[#252a54] rounded-2xl shadow-sm border border-gray-100 dark:border-[#2f366b] overflow-hidden p-6 sm:p-8">
+          <article className="bg-white dark:bg-[#252a54] rounded-2xl shadow-sm border border-gray-100 dark:border-[#2f366b] overflow-visible p-4 sm:p-8">
             
-            {/* Top Badge & Post Action Bar */}
+            {/* Top Badge */}
             <div className="flex items-center justify-between pb-4 border-b border-gray-100 dark:border-[#2f366b] mb-4">
               <a
                 href={`/${post.categorySlug}/`}
@@ -410,18 +370,6 @@ export const PostPageView: React.FC<PostPageViewProps> = ({
               >
                 {post.category}
               </a>
-
-              <div className="flex items-center gap-2">
-                {/* Post Settings Toggle */}
-                <button
-                  onClick={() => setShowSettings(!showSettings)}
-                  className="flex items-center gap-1.5 px-3 py-1 rounded-lg border border-gray-200 dark:border-[#384180] text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-[#1e2348] text-xs font-medium transition-colors"
-                  title="تخصيص الخط وقراءة المقال"
-                >
-                  <Settings className="w-3.5 h-3.5 text-[#035dcd]" />
-                  <span className="hidden sm:inline">إعدادات القراءة</span>
-                </button>
-              </div>
             </div>
 
             {/* Reading Settings Drawer (SeoPlus .PostSittings) */}
@@ -484,84 +432,11 @@ export const PostPageView: React.FC<PostPageViewProps> = ({
             )}
 
             {/* Title (SeoPlus h1.topic-title) */}
-            <h1 className="text-2xl sm:text-3xl font-black text-gray-900 dark:text-white leading-snug mb-5">
+            <h1 className="text-xl sm:text-3xl font-black text-gray-900 dark:text-white leading-snug mb-5">
               {post.title}
             </h1>
 
-            {/* Author & Meta Line */}
-            <div className="flex flex-wrap items-center justify-between gap-4 pb-6 border-b border-gray-100 dark:border-[#2f366b] mb-6">
-              <div className="flex items-center gap-3">
-                <img
-                  src={post.author.avatar}
-                  alt={post.author.name}
-                  className="w-11 h-11 rounded-full object-cover border-2 border-[#035dcd]"
-                />
-                <div>
-                  <div className="font-bold text-sm text-gray-800 dark:text-white flex items-center gap-1.5">
-                    <User className="w-3.5 h-3.5 text-[#035dcd]" />
-                    <span>{post.author.name}</span>
-                  </div>
-                  <div className="flex items-center gap-3 text-xs text-gray-400 mt-0.5">
-                    <span className="flex items-center gap-1">
-                      <Clock className="w-3 h-3 text-[#035dcd]" /> {post.date}
-                    </span>
-                    <span>• {post.readTime}</span>
-                  </div>
-                </div>
-              </div>
 
-              {/* Share & Actions */}
-              <div className="flex items-center gap-2">
-                <button
-                  onClick={handleCopyLink}
-                  className="p-2 rounded-lg bg-gray-100 dark:bg-[#1e2348] hover:bg-gray-200 dark:hover:bg-[#384180] text-gray-700 dark:text-gray-200 text-xs flex items-center gap-1 transition-colors"
-                  title="نسخ رابط المقال"
-                >
-                  <Copy className="w-4 h-4" />
-                  <span className="hidden sm:inline">{copiedLink ? 'تم النسخ!' : 'نسخ الرابط'}</span>
-                </button>
-
-                <button
-                  onClick={handlePrint}
-                  className="p-2 rounded-lg bg-gray-100 dark:bg-[#1e2348] hover:bg-gray-200 dark:hover:bg-[#384180] text-gray-700 dark:text-gray-200 text-xs flex items-center gap-1 transition-colors"
-                  title="طباعة المقال"
-                >
-                  <Printer className="w-4 h-4" />
-                </button>
-              </div>
-            </div>
-
-            {/* Sponsored / Ad Notice Box (#top-a3lan) */}
-            <div className="my-5 p-3.5 rounded-xl bg-gray-50 dark:bg-[#1f244a] border border-dashed border-gray-300 dark:border-gray-700 text-center">
-              <span className="text-[10px] text-gray-400 uppercase tracking-widest block mb-1">
-                إعلان ممول
-              </span>
-              <div className="text-xs font-bold text-[#035dcd] dark:text-blue-400">
-                العنكبوت للمعلومات: تابع قناة التلغرام الرسمية للحصول على أحدث التحديثات والأكواد اليومية مجاناً
-              </div>
-            </div>
-
-            {/* Featured Image with Click-to-Enlarge Lightbox */}
-            <div
-              onClick={() => onOpenImage(post.thumbnail, post.title)}
-              className="relative my-6 rounded-2xl overflow-hidden max-h-[460px] bg-gray-100 dark:bg-gray-800 shadow-md group cursor-pointer"
-              title="انقر لتكبير الصورة بحجمها الكامل"
-            >
-              <img
-                src={post.thumbnail}
-                alt={post.title}
-                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-              />
-              <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors flex items-center justify-center">
-                <div className="p-3 rounded-full bg-white/90 text-gray-900 shadow-lg opacity-0 group-hover:opacity-100 transition-opacity transform translate-y-2 group-hover:translate-y-0 duration-200 flex items-center gap-2 text-xs font-bold">
-                  <Maximize2 className="w-4 h-4 text-[#035dcd]" />
-                  <span>تكبير الصورة</span>
-                </div>
-              </div>
-            </div>
-
-            {/* 1. إعلان أول المقال (تحت العنوان مباشرة أو أسفل صورة الغلاف) */}
-            <AdSenseUnit key={`ad-top-${post.id}`} slotType="top" postId={post.id} />
 
             {/* Table of Contents (محتوى المقال - فهرس العناوين: h2 و h3 فقط) */}
             {tocHeadings.length > 0 && (
@@ -628,7 +503,7 @@ export const PostPageView: React.FC<PostPageViewProps> = ({
               {post.rawContent && splitRawContent ? (
                 <>
                   <div
-                    className="article-raw-html overflow-hidden"
+                    className="article-raw-html overflow-x-auto"
                     onClick={(e) => {
                       const target = e.target as HTMLElement;
                       if (target.tagName === 'IMG') {
@@ -639,12 +514,11 @@ export const PostPageView: React.FC<PostPageViewProps> = ({
                     dangerouslySetInnerHTML={{ __html: splitRawContent.before }}
                   />
 
-                  {/* 2. إعلان داخل المقالة (يُوضع بعد الفقرة الثانية أو الثالثة بين العناوين) */}
-                  <AdSenseUnit key={`ad-mid-${post.id}`} slotType="middle" postId={post.id} />
+
 
                   {splitRawContent.after && (
                     <div
-                      className="article-raw-html overflow-hidden"
+                      className="article-raw-html overflow-x-auto"
                       onClick={(e) => {
                         const target = e.target as HTMLElement;
                         if (target.tagName === 'IMG') {
@@ -750,10 +624,7 @@ export const PostPageView: React.FC<PostPageViewProps> = ({
                         )}
                       </section>
 
-                      {/* 2. إعلان داخل المقالة (يُوضع بعد الفقرة الثانية أو القسم الأول) */}
-                      {secIdx === 0 && (
-                        <AdSenseUnit key={`ad-mid-${post.id}`} slotType="middle" postId={post.id} />
-                      )}
+
                     </React.Fragment>
                   ))}
                 </>
@@ -803,71 +674,9 @@ export const PostPageView: React.FC<PostPageViewProps> = ({
               ))}
             </div>
 
-            {/* Social Share Bar */}
-            <div className="my-8 p-5 rounded-2xl bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-[#1e2348] dark:to-[#222750] border border-blue-100 dark:border-[#2f366b]">
-              <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
-                <div className="flex items-center gap-2">
-                  <Share2 className="w-5 h-5 text-[#035dcd]" />
-                  <span className="font-bold text-sm text-gray-800 dark:text-white">
-                    شارك المقال مع أصدقائك:
-                  </span>
-                </div>
-                <div className="flex flex-wrap items-center gap-2">
-                  <a
-                    href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.href)}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="px-3.5 py-1.5 rounded-lg bg-[#1877F2] text-white text-xs font-semibold hover:opacity-90 transition-opacity"
-                  >
-                    فيسبوك
-                  </a>
-                  <a
-                    href={`https://api.whatsapp.com/send?text=${encodeURIComponent(post.title + ' ' + window.location.href)}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="px-3.5 py-1.5 rounded-lg bg-[#25D366] text-white text-xs font-semibold hover:opacity-90 transition-opacity"
-                  >
-                    واتساب
-                  </a>
-                  <a
-                    href={`https://t.me/share/url?url=${encodeURIComponent(window.location.href)}&text=${encodeURIComponent(post.title)}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="px-3.5 py-1.5 rounded-lg bg-[#0088cc] text-white text-xs font-semibold hover:opacity-90 transition-opacity"
-                  >
-                    تيليجرام
-                  </a>
-                  <a
-                    href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(post.title)}&url=${encodeURIComponent(window.location.href)}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="px-3.5 py-1.5 rounded-lg bg-[#1DA1F2] text-white text-xs font-semibold hover:opacity-90 transition-opacity"
-                  >
-                    تويتر (X)
-                  </a>
-                </div>
-              </div>
-            </div>
 
-            {/* Author Box (SeoPlus .author-posts) */}
-            <div className="p-6 rounded-2xl bg-gray-50 dark:bg-[#1f244a] border border-gray-100 dark:border-[#2f366b] flex items-start gap-4">
-              <img
-                src={post.author.avatar}
-                alt={post.author.name}
-                className="w-16 h-16 rounded-full object-cover border-2 border-[#035dcd] shrink-0"
-              />
-              <div>
-                <h4 className="font-bold text-base text-gray-900 dark:text-white">
-                  عن الكاتب: {post.author.name}
-                </h4>
-                <span className="text-xs text-[#035dcd] dark:text-blue-400 font-semibold block mb-1">
-                  {post.author.role}
-                </span>
-                <p className="text-xs text-gray-600 dark:text-gray-300 leading-relaxed">
-                  {post.author.bio}
-                </p>
-              </div>
-            </div>
+
+
 
             {/* Next / Previous Post Navigation (SeoPlus .page-navigation) */}
             <div className="my-8 grid grid-cols-1 sm:grid-cols-2 gap-4 border-t border-b border-gray-100 dark:border-[#2f366b] py-6">

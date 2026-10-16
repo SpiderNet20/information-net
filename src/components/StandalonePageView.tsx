@@ -314,90 +314,140 @@ export const StandalonePageView: React.FC<StandalonePageViewProps> = ({
                 يحتوي موقع العنكبوت للمعلومات على خمسة أقسام رئيسية متخصصة ومحدثة بانتظام:
               </p>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 pt-2">
-                <div className="p-4 rounded-xl border border-gray-200 dark:border-[#2f366b] hover:border-[#035dcd] transition-all">
-                  <div className="flex items-center gap-2 font-bold text-gray-900 dark:text-white text-sm mb-2">
-                    <Sparkles className="w-4 h-4 text-purple-500" />
-                    <span>الذكاء الاصطناعي (AI)</span>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 pt-3">
+                <div className="rounded-2xl border border-gray-200 dark:border-[#2f366b] overflow-hidden hover:shadow-md transition-all group bg-white dark:bg-[#1e2348] flex flex-col">
+                  <div className="relative h-36 overflow-hidden">
+                    <img
+                      src="https://images.unsplash.com/photo-1677442136019-21780efad99a?auto=format&fit=crop&w=600&q=80"
+                      alt="الذكاء الاصطناعي"
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent flex items-end p-3">
+                      <span className="text-white text-xs font-bold bg-purple-600/90 px-2.5 py-0.5 rounded-full">
+                        الذكاء الاصطناعي (AI)
+                      </span>
+                    </div>
                   </div>
-                  <p className="text-xs text-gray-500 dark:text-gray-400 mb-3">
-                    أحدث نماذج Google Gemini وChatGPT، أوامر Prompts الاحترافية، أدوات إنشاء الفيديو، والإنتاجية.
-                  </p>
-                  <button
-                    onClick={() => onSelectCategory('AI')}
-                    className="text-xs font-semibold text-[#035dcd] hover:underline flex items-center gap-1 cursor-pointer"
-                  >
-                    <span>تصفح المقالات</span>
-                    <ChevronLeft className="w-3.5 h-3.5" />
-                  </button>
+                  <div className="p-4 flex-1 flex flex-col justify-between space-y-3">
+                    <p className="text-xs text-gray-600 dark:text-gray-300 leading-relaxed">
+                      يغطي هذا القسم أحدث نماذج الذكاء الاصطناعي مثل Google Gemini وChatGPT، مع تقديم أوامر Prompts احترافية، وأدوات إنشاء الفيديو والتصميم الذكي لزيادة الإنتاجية.
+                    </p>
+                    <button
+                      onClick={() => onSelectCategory('AI')}
+                      className="text-xs font-semibold text-[#035dcd] dark:text-blue-400 hover:underline flex items-center gap-1 cursor-pointer pt-1"
+                    >
+                      <span>تصفح المقالات</span>
+                      <ChevronLeft className="w-3.5 h-3.5" />
+                    </button>
+                  </div>
                 </div>
 
-                <div className="p-4 rounded-xl border border-gray-200 dark:border-[#2f366b] hover:border-[#035dcd] transition-all">
-                  <div className="flex items-center gap-2 font-bold text-gray-900 dark:text-white text-sm mb-2">
-                    <Gamepad2 className="w-4 h-4 text-emerald-500" />
-                    <span>الألعاب وببجي موبايل (Games)</span>
+                <div className="rounded-2xl border border-gray-200 dark:border-[#2f366b] overflow-hidden hover:shadow-md transition-all group bg-white dark:bg-[#1e2348] flex flex-col">
+                  <div className="relative h-36 overflow-hidden">
+                    <img
+                      src="https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=600&q=80"
+                      alt="الألعاب وببجي موبايل"
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent flex items-end p-3">
+                      <span className="text-white text-xs font-bold bg-emerald-600/90 px-2.5 py-0.5 rounded-full">
+                        الألعاب وببجي (Games)
+                      </span>
+                    </div>
                   </div>
-                  <p className="text-xs text-gray-500 dark:text-gray-400 mb-3">
-                    أحدث شروحات ببجي موبايل، حلول مشاكل الحظر، إعدادات الحساسية، مراجعات الألعاب الترفيهية والتكتيكية.
-                  </p>
-                  <button
-                    onClick={() => onSelectCategory('Games')}
-                    className="text-xs font-semibold text-[#035dcd] hover:underline flex items-center gap-1 cursor-pointer"
-                  >
-                    <span>تصفح المقالات</span>
-                    <ChevronLeft className="w-3.5 h-3.5" />
-                  </button>
+                  <div className="p-4 flex-1 flex flex-col justify-between space-y-3">
+                    <p className="text-xs text-gray-600 dark:text-gray-300 leading-relaxed">
+                      دليل شامل لألعاب الهواتف وأجهزة الكمبيوتر، مع تركيز خاص على شروحات ببجي موبايل، حلول مشاكل الحظر، إعدادات الحساسية، وألعاب الترفيه والتكتيك.
+                    </p>
+                    <button
+                      onClick={() => onSelectCategory('Games')}
+                      className="text-xs font-semibold text-[#035dcd] dark:text-blue-400 hover:underline flex items-center gap-1 cursor-pointer pt-1"
+                    >
+                      <span>تصفح المقالات</span>
+                      <ChevronLeft className="w-3.5 h-3.5" />
+                    </button>
+                  </div>
                 </div>
 
-                <div className="p-4 rounded-xl border border-gray-200 dark:border-[#2f366b] hover:border-[#035dcd] transition-all">
-                  <div className="flex items-center gap-2 font-bold text-gray-900 dark:text-white text-sm mb-2">
-                    <Cpu className="w-4 h-4 text-blue-500" />
-                    <span>البرامج والشروحات (Software)</span>
+                <div className="rounded-2xl border border-gray-200 dark:border-[#2f366b] overflow-hidden hover:shadow-md transition-all group bg-white dark:bg-[#1e2348] flex flex-col">
+                  <div className="relative h-36 overflow-hidden">
+                    <img
+                      src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&w=600&q=80"
+                      alt="البرامج والشروحات"
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent flex items-end p-3">
+                      <span className="text-white text-xs font-bold bg-blue-600/90 px-2.5 py-0.5 rounded-full">
+                        البرامج والشروحات (Software)
+                      </span>
+                    </div>
                   </div>
-                  <p className="text-xs text-gray-500 dark:text-gray-400 mb-3">
-                    تطبيقات الهواتف الذكية لنظامي أندرويد وiOS، برامج الكمبيوتر الأساسية، حلول الأعطال، وأدوات التنزيل.
-                  </p>
-                  <button
-                    onClick={() => onSelectCategory('Software')}
-                    className="text-xs font-semibold text-[#035dcd] hover:underline flex items-center gap-1 cursor-pointer"
-                  >
-                    <span>تصفح المقالات</span>
-                    <ChevronLeft className="w-3.5 h-3.5" />
-                  </button>
+                  <div className="p-4 flex-1 flex flex-col justify-between space-y-3">
+                    <p className="text-xs text-gray-600 dark:text-gray-300 leading-relaxed">
+                      نستعرض أفضل تطبيقات أندرويد وiOS وبرامج الكمبيوتر الآمنة، مع حلول الأعطال التقنية، وتوفير أدوات التنزيل والتثبيت السريع.
+                    </p>
+                    <button
+                      onClick={() => onSelectCategory('Software')}
+                      className="text-xs font-semibold text-[#035dcd] dark:text-blue-400 hover:underline flex items-center gap-1 cursor-pointer pt-1"
+                    >
+                      <span>تصفح المقالات</span>
+                      <ChevronLeft className="w-3.5 h-3.5" />
+                    </button>
+                  </div>
                 </div>
 
-                <div className="p-4 rounded-xl border border-gray-200 dark:border-[#2f366b] hover:border-[#035dcd] transition-all">
-                  <div className="flex items-center gap-2 font-bold text-gray-900 dark:text-white text-sm mb-2">
-                    <Flame className="w-4 h-4 text-amber-500" />
-                    <span>الربح من الإنترنت (Business)</span>
+                <div className="rounded-2xl border border-gray-200 dark:border-[#2f366b] overflow-hidden hover:shadow-md transition-all group bg-white dark:bg-[#1e2348] flex flex-col">
+                  <div className="relative h-36 overflow-hidden">
+                    <img
+                      src="https://images.unsplash.com/photo-1553729459-efe14ef6055d?auto=format&fit=crop&w=600&q=80"
+                      alt="الربح من الإنترنت"
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent flex items-end p-3">
+                      <span className="text-white text-xs font-bold bg-amber-600/90 px-2.5 py-0.5 rounded-full">
+                        الربح من الإنترنت (Business)
+                      </span>
+                    </div>
                   </div>
-                  <p className="text-xs text-gray-500 dark:text-gray-400 mb-3">
-                    استراتيجيات العمل الحر، قنوات تيليجرام الربحية، التسويق بالعمولة، والفرص الوظيفية الحديثة.
-                  </p>
-                  <button
-                    onClick={() => onSelectCategory('Business')}
-                    className="text-xs font-semibold text-[#035dcd] hover:underline flex items-center gap-1 cursor-pointer"
-                  >
-                    <span>تصفح المقالات</span>
-                    <ChevronLeft className="w-3.5 h-3.5" />
-                  </button>
+                  <div className="p-4 flex-1 flex flex-col justify-between space-y-3">
+                    <p className="text-xs text-gray-600 dark:text-gray-300 leading-relaxed">
+                      استراتيجيات العمل الحر، قنوات تيليجرام الربحية، التسويق بالعمولة، والفرص الوظيفية الرقمية الحديثة للشباب العربي.
+                    </p>
+                    <button
+                      onClick={() => onSelectCategory('Business')}
+                      className="text-xs font-semibold text-[#035dcd] dark:text-blue-400 hover:underline flex items-center gap-1 cursor-pointer pt-1"
+                    >
+                      <span>تصفح المقالات</span>
+                      <ChevronLeft className="w-3.5 h-3.5" />
+                    </button>
+                  </div>
                 </div>
 
-                <div className="p-4 rounded-xl border border-gray-200 dark:border-[#2f366b] hover:border-[#035dcd] transition-all">
-                  <div className="flex items-center gap-2 font-bold text-gray-900 dark:text-white text-sm mb-2">
-                    <Layers className="w-4 h-4 text-teal-500" />
-                    <span>مقالات تعليمية (Education)</span>
+                <div className="rounded-2xl border border-gray-200 dark:border-[#2f366b] overflow-hidden hover:shadow-md transition-all group bg-white dark:bg-[#1e2348] flex flex-col sm:col-span-2 lg:col-span-1">
+                  <div className="relative h-36 overflow-hidden">
+                    <img
+                      src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=600&q=80"
+                      alt="مقالات تعليمية"
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent flex items-end p-3">
+                      <span className="text-white text-xs font-bold bg-teal-600/90 px-2.5 py-0.5 rounded-full">
+                        مقالات تعليمية (Education)
+                      </span>
+                    </div>
                   </div>
-                  <p className="text-xs text-gray-500 dark:text-gray-400 mb-3">
-                    شروحات تقوية شبكات الاتصال 4G و5G، أجهزة الباور بانك والإلكترونيات، ودليل السفر والتقنية الذكية.
-                  </p>
-                  <button
-                    onClick={() => onSelectCategory('Education')}
-                    className="text-xs font-semibold text-[#035dcd] hover:underline flex items-center gap-1 cursor-pointer"
-                  >
-                    <span>تصفح المقالات</span>
-                    <ChevronLeft className="w-3.5 h-3.5" />
-                  </button>
+                  <div className="p-4 flex-1 flex flex-col justify-between space-y-3">
+                    <p className="text-xs text-gray-600 dark:text-gray-300 leading-relaxed">
+                      شروحات تقوية شبكات الاتصال 4G و5G، أجهزة الباور بانك والإلكترونيات، ودليل السفر والسياحة الذكية بمعايير موثوقة.
+                    </p>
+                    <button
+                      onClick={() => onSelectCategory('Education')}
+                      className="text-xs font-semibold text-[#035dcd] dark:text-blue-400 hover:underline flex items-center gap-1 cursor-pointer pt-1"
+                    >
+                      <span>تصفح المقالات</span>
+                      <ChevronLeft className="w-3.5 h-3.5" />
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>

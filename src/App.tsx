@@ -47,6 +47,8 @@ import { SeoSchemaViewerModal } from './components/SeoSchemaViewerModal';
 import { SitemapModal } from './components/SitemapModal';
 import { HomeCategorySection } from './components/HomeCategorySection';
 import { StandalonePageView } from './components/StandalonePageView';
+import { GoogleDocsManager } from './components/GoogleDocsManager';
+import { AdSenseUnit } from './components/AdSenseUnit';
 import { StandalonePageType } from './types';
 import { applySeoMetadata } from './utils/seo';
 
@@ -74,6 +76,7 @@ export default function App() {
   const [lightboxImage, setLightboxImage] = useState<{ url: string; title?: string } | null>(null);
   const [activePage, setActivePage] = useState<PageType | null>(null);
   const [standalonePage, setStandalonePage] = useState<StandalonePageType | null>(null);
+  const [isGoogleDocsOpen, setIsGoogleDocsOpen] = useState(false);
 
   // Pagination / Load More
   const [visibleCount, setVisibleCount] = useState(6);
@@ -107,8 +110,8 @@ export default function App() {
 
   // Dynamic SEO & Schema.org JSON-LD Injection
   useEffect(() => {
-    applySeoMetadata(selectedPost, activeCategory);
-  }, [selectedPost, activeCategory]);
+    applySeoMetadata(selectedPost, activeCategory, standalonePage);
+  }, [selectedPost, activeCategory, standalonePage]);
 
   // Parse current URL (supports clean /Games/ or /AI/slug paths, plus backward-compatible hashes)
   const parseUrlToState = () => {
@@ -240,7 +243,7 @@ export default function App() {
     if (norm === 'all') {
       window.scrollTo({ top: 0, behavior: 'smooth' });
     } else {
-      window.scrollTo({ top: 380, behavior: 'smooth' });
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   };
 
@@ -281,7 +284,7 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-[#f7f7f7] dark:bg-[#1b1e38] text-[#34495e] dark:text-gray-100 transition-colors duration-300">
+    <div className="min-h-screen flex flex-col bg-[#f7f7f7] dark:bg-[#1b1e38] text-[#34495e] dark:text-gray-100 transition-colors duration-300 pb-16 lg:pb-0">
       
       {/* 1. Main Header */}
       <Header
@@ -291,14 +294,14 @@ export default function App() {
         onOpenSearch={() => setIsSearchOpen(true)}
         onOpenSpeedTest={() => setIsSpeedTestOpen(true)}
         onOpenRedirectTool={() => setIsRedirectToolOpen(true)}
-        onOpenSeoViewer={() => setIsSeoViewerOpen(true)}
         onOpenStandalonePage={handleOpenStandalonePage}
         activeCategory={activeCategory}
         onSelectCategory={handleSelectCategory}
+        onOpenGoogleDocs={() => setIsGoogleDocsOpen(true)}
       />
 
       {/* 2. Container Site Wrapper */}
-      <main className="flex-1 max-w-7xl w-full mx-auto px-3 sm:px-6 py-4">
+      <main className="flex-1 max-w-7xl w-full mx-auto px-3 sm:px-6 py-4 pb-20 lg:pb-4">
         
         {/* Standalone Full Page View (About, Contact, Privacy, Terms, Sitemap) */}
         {standalonePage ? (
@@ -343,11 +346,66 @@ export default function App() {
               />
             )}
 
+            {/* Interactive Category Banner - Visible only on Category Pages */}
+            {activeCategory !== 'all' && (
+              <div className="mb-8">
+                <div className="bg-gradient-to-l from-[#035dcd] to-blue-700 rounded-[2rem] overflow-hidden shadow-xl border border-blue-400/20">
+                  <div className="flex flex-col md:flex-row items-center gap-8 p-6 sm:p-10">
+                    {/* Text Content */}
+                    <div className="flex-1 text-right order-2 md:order-1">
+                      <div className="flex items-center gap-2 text-xs text-blue-100/80 mb-4 font-bold">
+                        <button onClick={() => handleSelectCategory('all')} className="hover:text-white transition-colors cursor-pointer">الرئيسية</button>
+                        <span>/</span>
+                        <span className="text-white">قسم {currentCategoryInfo?.name}</span>
+                      </div>
+                      
+                      <h1 className="text-3xl sm:text-5xl font-black text-white mb-4 leading-tight">
+                        استكشف عالم {currentCategoryInfo?.name}
+                      </h1>
+                      
+                      <p className="text-blue-50 text-sm sm:text-base leading-relaxed mb-8 opacity-90 max-w-xl">
+                        {currentCategoryInfo?.description || 'اكتشف أحدث المقالات والشروحات الحصرية في هذا القسم المتميز.'}
+                      </p>
+
+                      <div className="flex flex-wrap gap-4">
+                        <button className="bg-white text-[#035dcd] px-8 py-3 rounded-xl font-bold hover:bg-blue-50 transition-all flex items-center gap-2 group cursor-pointer shadow-lg">
+                          <span>استكشف الآن</span>
+                          <ArrowRight className="w-4 h-4 group-hover:translate-x-[-4px] transition-transform" />
+                        </button>
+                        <div className="px-4 py-3 rounded-xl bg-blue-600/50 backdrop-blur-sm border border-blue-400/30 text-white text-xs font-bold flex items-center gap-2">
+                          <Flame className="w-4 h-4 text-amber-400" />
+                          <span>{filteredPosts.length} موضوع متوفر</span>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Image Column */}
+                    <div className="w-full md:w-2/5 order-1 md:order-2">
+                      <div className="relative h-48 sm:h-64 overflow-hidden rounded-3xl border-4 border-white/10 shadow-lg group">
+                        <img 
+                          src={currentCategoryInfo?.image} 
+                          alt={currentCategoryInfo?.name} 
+                          className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                          referrerPolicy="no-referrer"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* AdSense Unit immediately after banner */}
+                <div className="mt-8">
+                  <AdSenseUnit key={`ad-cat-${activeCategory}`} slotType="top" />
+                </div>
+              </div>
+            )}
+
             {/* Main Content Layout: Two Columns (Main Content + Sidebar) */}
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start mt-6">
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8 items-start mt-6 w-full max-w-full">
               
               {/* Main Content Column (Spans 2 columns on desktop) */}
-              <div className="lg:col-span-2 space-y-8">
+              <div className="lg:col-span-2 w-full space-y-8 overflow-visible">
                 
                 {/* CASE A: HOMEPAGE (activeCategory === 'all')
                     Strict adherence to Requirement #3:
@@ -356,23 +414,32 @@ export default function App() {
                 */}
                 {activeCategory === 'all' ? (
                   <div className="space-y-8">
-                    {/* Top Introduction & Overview Banner */}
-                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-4 rounded-2xl bg-white dark:bg-[#252a54] border border-gray-100 dark:border-[#2f366b] shadow-sm">
-                      <div className="flex items-center gap-2.5">
-                        <span className="w-2.5 h-6 bg-[#035dcd] rounded-full inline-block" />
-                        <div>
-                          <h2 className="text-lg sm:text-xl font-black text-gray-900 dark:text-white">
-                            أقسام الموقع الرسمية ومختارات المحتوى
-                          </h2>
-                          <p className="text-xs text-gray-400 mt-0.5">
-                            تغطية شاملة منظمة عبر الأقسام الـ 5 مع روابط برمجية مستقلة لكل قسم
-                          </p>
+                    {/* Category Overview Grid (Requirement #8 & #9) */}
+                    <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4">
+                      {INITIAL_CATEGORIES.map((cat) => (
+                        <div
+                          key={cat.slug}
+                          onClick={() => handleSelectCategory(cat.slug)}
+                          className="group relative h-32 rounded-2xl overflow-hidden cursor-pointer border border-gray-100 dark:border-[#2f366b] shadow-sm hover:shadow-md transition-all"
+                        >
+                          <img
+                            src={cat.image}
+                            alt={cat.name}
+                            className="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                          />
+                          <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent flex flex-col justify-end p-4 text-right">
+                            <h3 className="text-white font-black text-sm mb-1 group-hover:text-blue-400 transition-colors">
+                              قسم {cat.name}
+                            </h3>
+                            <p className="text-gray-300 text-[10px] leading-tight line-clamp-2 opacity-90 group-hover:opacity-100 transition-opacity">
+                              {cat.description}
+                            </p>
+                          </div>
+                          <div className="absolute top-3 left-3 px-2 py-0.5 rounded-full bg-blue-600/80 backdrop-blur-sm text-white text-[9px] font-bold">
+                            {INITIAL_POSTS.filter(p => p.categorySlug === cat.slug).length} مقال
+                          </div>
                         </div>
-                      </div>
-
-                      <span className="text-xs font-bold text-[#035dcd] dark:text-blue-300 bg-blue-50 dark:bg-blue-900/30 px-3 py-1.5 rounded-xl border border-blue-100 dark:border-blue-800/40 self-start sm:self-auto">
-                        5 أقسام رئيسية • {INITIAL_POSTS.length} مقال
-                      </span>
+                      ))}
                     </div>
 
                     {/* The 5 Dedicated Sections in order */}
@@ -394,59 +461,9 @@ export default function App() {
                   </div>
                 ) : (
                   /* CASE B: DEDICATED SECTION VIEW (When a category like AI, Games, Software, Business, Education is selected) */
-                  <div className="space-y-6">
-                    {/* Category Header Banner with Canonical URL & Return button */}
-                    <div className="bg-white dark:bg-[#252a54] p-5 sm:p-6 rounded-2xl border border-gray-100 dark:border-[#2f366b] shadow-sm">
-                      <div className="flex flex-wrap items-center justify-between gap-4">
-                        <div>
-                          {/* Breadcrumbs */}
-                          <div className="flex items-center gap-2 text-xs text-gray-400 mb-2">
-                            <button
-                              onClick={() => handleSelectCategory('all')}
-                              className="hover:text-[#035dcd] dark:hover:text-blue-400 font-bold transition-colors"
-                            >
-                              الرئيسية
-                            </button>
-                            <span>/</span>
-                            <span className="text-[#035dcd] dark:text-blue-400 font-bold">
-                              قسم {currentCategoryInfo?.name || activeCategory}
-                            </span>
-                          </div>
-
-                          <h1 className="text-2xl sm:text-3xl font-black text-gray-900 dark:text-white flex items-center gap-3">
-                            <span>قسم {currentCategoryInfo?.name || activeCategory}</span>
-                            <span className="text-xs font-bold text-gray-400 bg-gray-100 dark:bg-[#1e2348] px-2.5 py-1 rounded-full font-sans">
-                              {filteredPosts.length} مقال
-                            </span>
-                          </h1>
-
-                          {/* Official URL display */}
-                          <div className="mt-2.5 flex items-center gap-2 text-xs font-mono text-gray-500 dark:text-gray-400">
-                            <span>الرابط المعتمد:</span>
-                            <a
-                              href={`https://www.information-net.com/${currentCategoryInfo?.slug || activeCategory}/`}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="text-[#035dcd] dark:text-blue-400 font-bold hover:underline flex items-center gap-1"
-                            >
-                              <span>https://www.information-net.com/{currentCategoryInfo?.slug || activeCategory}/</span>
-                              <ExternalLink className="w-3 h-3" />
-                            </a>
-                          </div>
-                        </div>
-
-                        {/* Back to Home Button */}
-                        <button
-                          onClick={() => handleSelectCategory('all')}
-                          className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-gray-100 dark:bg-[#1e2348] hover:bg-[#035dcd] text-gray-700 dark:text-gray-200 hover:text-white dark:hover:text-white text-xs font-bold transition-all shadow-sm cursor-pointer"
-                        >
-                          <span>العودة للرئيسية (كافة الأقسام)</span>
-                          <ChevronLeft className="w-4 h-4" />
-                        </button>
-                      </div>
-
-                      {/* View Layout Switcher (SeoPlus BlogStylePosts) */}
-                      <div className="mt-5 pt-4 border-t border-gray-100 dark:border-[#2f366b] flex flex-wrap items-center justify-between gap-3">
+                    <div className="space-y-6">
+                      {/* View Layout Switcher (SeoPlus BlogStylePosts) - Hidden on mobile as requested */}
+                      <div className="hidden sm:flex p-5 rounded-2xl bg-white dark:bg-[#252a54] border border-gray-100 dark:border-[#2f366b] shadow-sm flex-wrap items-center justify-between gap-3">
                         <span className="text-xs text-gray-400 font-medium">
                           عرض مقالات القسم حسب التنسيق المفضل لديك:
                         </span>
@@ -492,7 +509,7 @@ export default function App() {
                           </button>
                         </div>
                       </div>
-                    </div>
+
 
                     {/* Section Articles Feed */}
                     {displayedPosts.length === 0 ? (
@@ -756,6 +773,7 @@ export default function App() {
         onOpenStandalonePage={handleOpenStandalonePage}
         onOpenSpeedTest={() => setIsSpeedTestOpen(true)}
         onOpenRedirectTool={() => setIsRedirectToolOpen(true)}
+        onOpenGoogleDocs={() => setIsGoogleDocsOpen(true)}
       />
 
       {/* 6. Modals */}
@@ -799,6 +817,12 @@ export default function App() {
         onClose={() => setIsSitemapOpen(false)}
         posts={INITIAL_POSTS}
         onSelectPost={handleSelectPost}
+      />
+
+      {/* 7. Google Docs Integration Tool */}
+      <GoogleDocsManager
+        isOpen={isGoogleDocsOpen}
+        onClose={() => setIsGoogleDocsOpen(false)}
       />
 
       {/* Fullscreen High-Resolution Image Lightbox */}

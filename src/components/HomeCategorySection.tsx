@@ -86,16 +86,16 @@ export const HomeCategorySection: React.FC<HomeCategorySectionProps> = ({
   if (categoryPosts.length === 0) return null;
 
   return (
-    <section className="bg-white dark:bg-[#252a54] rounded-2xl p-5 sm:p-6 shadow-sm border border-gray-100 dark:border-[#2f366b] transition-all">
+    <section className="bg-white dark:bg-[#252a54] rounded-2xl p-4 sm:p-6 shadow-sm border border-gray-100 dark:border-[#2f366b] transition-all">
       {/* 1. Distinct Section Header Bar */}
-      <div className="flex flex-wrap items-center justify-between gap-3 pb-4 mb-5 border-b-2 border-gray-100 dark:border-[#2f366b]">
+      <div className="flex flex-wrap items-center justify-between gap-3 pb-3 mb-4 border-b-2 border-gray-100 dark:border-[#2f366b]">
         {/* Category Identity */}
         <div className="flex items-center gap-3">
           <div className={`w-9 h-9 rounded-xl ${theme.badgeColor} flex items-center justify-center text-white shadow-sm`}>
             <IconComponent className="w-5 h-5" />
           </div>
 
-          <div>
+          <div className="flex flex-col">
             <div className="flex items-center gap-2">
               <a
                 href={`/${category.slug}/`}
@@ -111,6 +111,9 @@ export const HomeCategorySection: React.FC<HomeCategorySectionProps> = ({
                 {posts.length} مقال
               </span>
             </div>
+            <p className="text-[11px] text-gray-500 dark:text-gray-400 mt-0.5 line-clamp-1 max-w-[200px] sm:max-w-md">
+              {category.description}
+            </p>
           </div>
         </div>
 
@@ -137,7 +140,7 @@ export const HomeCategorySection: React.FC<HomeCategorySectionProps> = ({
           <article className="md:col-span-7 group bg-gray-50/80 dark:bg-[#1f244a] rounded-xl overflow-hidden border border-gray-100 dark:border-[#2e3569] flex flex-col justify-between hover:shadow-md transition-all">
             <div
               onClick={() => onSelectPost(featuredPost)}
-              className="relative h-52 sm:h-56 overflow-hidden bg-gray-200 cursor-pointer"
+              className="relative h-44 sm:h-56 overflow-hidden bg-gray-200 cursor-pointer"
             >
               <img
                 src={featuredPost.thumbnail}
@@ -164,9 +167,9 @@ export const HomeCategorySection: React.FC<HomeCategorySectionProps> = ({
 
             <div className="p-4 sm:p-5 flex-1 flex flex-col justify-between text-right">
               <div>
-                <div className="flex items-center gap-3 text-xs text-gray-400 mb-2">
+                <div className="flex items-center gap-3 text-[10px] text-gray-400 mb-1.5">
                   <span className="flex items-center gap-1">
-                    <Clock className="w-3.5 h-3.5 text-[#035dcd]" />
+                    <Clock className="w-3 h-3 text-[#035dcd]" />
                     <span>{featuredPost.date}</span>
                   </span>
                   <span>• {featuredPost.readTime}</span>
@@ -185,7 +188,7 @@ export const HomeCategorySection: React.FC<HomeCategorySectionProps> = ({
               </div>
 
               <div className="mt-4 pt-3 border-t border-gray-200/60 dark:border-[#2e3569] flex items-center justify-between">
-                <span className="text-[11px] text-gray-400 font-medium">
+                <span className="text-[10px] text-gray-400 font-medium">
                   بواسطة: {featuredPost.author.name}
                 </span>
 
@@ -238,15 +241,15 @@ export const HomeCategorySection: React.FC<HomeCategorySectionProps> = ({
 
       {/* 3. Section Footer - Direct link to category */}
       <div className="mt-5 pt-3 border-t border-gray-100 dark:border-[#2f366b] flex items-center justify-between text-xs">
-        <span className="text-gray-400 text-[11px]">
-          يعرض أحدث مقالات {category.name} مع روابطها البرمجية المعتمدة
+        <span className="text-gray-400 text-[10px]">
+          يعرض أحدث مقالات {category.name} مع روابطها المعتمدة
         </span>
 
         <button
           onClick={() => onSelectCategory(category.slug)}
           className="font-bold text-[#035dcd] dark:text-blue-400 hover:underline flex items-center gap-1 group/link cursor-pointer"
         >
-          <span>عرض كافة مقالات قسم {category.name} ({posts.length} مقال)</span>
+          <span>عرض كافة مقالات قسم {category.name}</span>
           <ChevronLeft className="w-3.5 h-3.5 group-hover/link:-translate-x-1 transition-transform" />
         </button>
       </div>

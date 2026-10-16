@@ -23,7 +23,7 @@ export const FeaturedSlider: React.FC<FeaturedSliderProps> = ({ posts, onSelectP
             احدث المقالات المميزة
           </h2>
         </div>
-        <span className="text-xs text-gray-400 font-medium">مختارات المحررين</span>
+        <span className="hidden sm:block text-xs text-gray-400 font-medium">مختارات المحررين</span>
       </div>
 
       {/* Sp-slide4 Grid */}
@@ -33,7 +33,7 @@ export const FeaturedSlider: React.FC<FeaturedSliderProps> = ({ posts, onSelectP
         {mainPost && (
           <div
             onClick={() => onSelectPost(mainPost)}
-            className="md:col-span-2 group relative h-72 sm:h-96 rounded-2xl overflow-hidden cursor-pointer shadow-md bg-gray-900"
+            className="md:col-span-2 group relative h-60 sm:h-96 rounded-2xl overflow-hidden cursor-pointer shadow-md bg-gray-900"
           >
             {/* Background Image */}
             <img
@@ -50,7 +50,7 @@ export const FeaturedSlider: React.FC<FeaturedSliderProps> = ({ posts, onSelectP
                 {mainPost.category}
               </span>
 
-              <h3 className="text-lg sm:text-2xl font-black leading-snug group-hover:text-blue-300 transition-colors drop-shadow-md">
+              <h3 className="text-base sm:text-2xl font-black leading-snug group-hover:text-blue-300 transition-colors drop-shadow-md">
                 {mainPost.title}
               </h3>
 
@@ -68,13 +68,13 @@ export const FeaturedSlider: React.FC<FeaturedSliderProps> = ({ posts, onSelectP
           </div>
         )}
 
-        {/* Side Stack of 2-3 Featured Cards */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-1 gap-3.5">
+        {/* Side Stack - Horizontal scroll on mobile, grid on desktop */}
+        <div className="flex overflow-x-auto snap-x snap-mandatory no-scrollbar -mx-3 px-3 gap-3.5 md:mx-0 md:px-0 md:grid md:grid-cols-1 md:overflow-visible">
           {sidePosts.map((post) => (
             <div
               key={post.id}
               onClick={() => onSelectPost(post)}
-              className="group relative h-36 sm:h-44 md:h-[184px] rounded-2xl overflow-hidden cursor-pointer shadow-md bg-gray-900"
+              className="shrink-0 w-[78%] snap-start md:w-auto group relative h-40 sm:h-44 md:h-full rounded-2xl overflow-hidden cursor-pointer shadow-md bg-gray-900"
             >
               <img
                 src={post.thumbnail}

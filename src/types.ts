@@ -52,6 +52,8 @@ export interface CategoryInfo {
   slug: string;
   count: number;
   colorClass: string;
+  description: string;
+  image: string;
 }
 
 export type StandalonePageType = 'about' | 'contact' | 'privacy' | 'terms' | 'sitemap';
