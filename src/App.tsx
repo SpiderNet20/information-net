@@ -47,7 +47,7 @@ import { SeoSchemaViewerModal } from './components/SeoSchemaViewerModal';
 import { SitemapModal } from './components/SitemapModal';
 import { HomeCategorySection } from './components/HomeCategorySection';
 import { StandalonePageView } from './components/StandalonePageView';
-import { GoogleDocsManager } from './components/GoogleDocsManager';
+
 import { AdSenseUnit } from './components/AdSenseUnit';
 import { StandalonePageType } from './types';
 import { applySeoMetadata } from './utils/seo';
@@ -76,7 +76,7 @@ export default function App() {
   const [lightboxImage, setLightboxImage] = useState<{ url: string; title?: string } | null>(null);
   const [activePage, setActivePage] = useState<PageType | null>(null);
   const [standalonePage, setStandalonePage] = useState<StandalonePageType | null>(null);
-  const [isGoogleDocsOpen, setIsGoogleDocsOpen] = useState(false);
+
 
   // Pagination / Load More
   const [visibleCount, setVisibleCount] = useState(6);
@@ -297,7 +297,7 @@ export default function App() {
         onOpenStandalonePage={handleOpenStandalonePage}
         activeCategory={activeCategory}
         onSelectCategory={handleSelectCategory}
-        onOpenGoogleDocs={() => setIsGoogleDocsOpen(true)}
+
       />
 
       {/* 2. Container Site Wrapper */}
@@ -773,7 +773,7 @@ export default function App() {
         onOpenStandalonePage={handleOpenStandalonePage}
         onOpenSpeedTest={() => setIsSpeedTestOpen(true)}
         onOpenRedirectTool={() => setIsRedirectToolOpen(true)}
-        onOpenGoogleDocs={() => setIsGoogleDocsOpen(true)}
+
       />
 
       {/* 6. Modals */}
@@ -819,11 +819,7 @@ export default function App() {
         onSelectPost={handleSelectPost}
       />
 
-      {/* 7. Google Docs Integration Tool */}
-      <GoogleDocsManager
-        isOpen={isGoogleDocsOpen}
-        onClose={() => setIsGoogleDocsOpen(false)}
-      />
+
 
       {/* Fullscreen High-Resolution Image Lightbox */}
       <ImageLightbox

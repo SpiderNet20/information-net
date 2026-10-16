@@ -431,6 +431,17 @@ export const PostPageView: React.FC<PostPageViewProps> = ({
               </div>
             )}
 
+            {/* Featured Image - Prominent display at the top of the article */}
+            <div className="mb-8 relative group overflow-hidden rounded-2xl border border-gray-100 dark:border-[#2f366b] shadow-md">
+              <img
+                src={post.thumbnail}
+                alt={post.title}
+                className="w-full h-auto max-h-[520px] object-cover cursor-pointer transition-transform duration-700 group-hover:scale-105"
+                onClick={() => onOpenImage(post.thumbnail, post.title)}
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" />
+            </div>
+
             {/* Title (SeoPlus h1.topic-title) */}
             <h1 className="text-xl sm:text-3xl font-black text-gray-900 dark:text-white leading-snug mb-5">
               {post.title}

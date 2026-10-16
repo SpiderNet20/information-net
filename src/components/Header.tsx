@@ -27,7 +27,7 @@ interface HeaderProps {
   onOpenStandalonePage: (page: StandalonePageType) => void;
   activeCategory: string;
   onSelectCategory: (cat: string) => void;
-  onOpenGoogleDocs: () => void;
+
 }
 
 export const Header: React.FC<HeaderProps> = ({
@@ -41,7 +41,7 @@ export const Header: React.FC<HeaderProps> = ({
   onOpenStandalonePage,
   activeCategory,
   onSelectCategory,
-  onOpenGoogleDocs,
+
 }) => {
   const categories = [
     { slug: 'all', name: 'الرئيسية' },
@@ -231,14 +231,7 @@ export const Header: React.FC<HeaderProps> = ({
               <Search className="w-4 h-4" />
             </button>
 
-            {/* Google Docs Integration */}
-            <button
-              onClick={onOpenGoogleDocs}
-              className="hidden lg:flex w-10 h-10 rounded-xl bg-blue-50 dark:bg-blue-900/30 text-[#035dcd] dark:text-blue-400 hover:bg-[#035dcd] hover:text-white transition-all items-center justify-center cursor-pointer shadow-sm"
-              title="مستندات جوجل"
-            >
-              <FileText className="w-4 h-4" />
-            </button>
+
 
             {/* Dark Mode Toggle - Hidden on mobile header */}
             <button
